@@ -20,25 +20,10 @@ public final class Main extends JavaPlugin implements Listener {
     Bukkit.getPluginManager().registerEvents(this, this);
   }
 
-  /**
-   * プレイヤーがSpigotにログインした時に青いベッドを一個所持するイベント
-   *
-   * @param e
-   */
-  @EventHandler
-  public void onPlayerJoin(PlayerJoinEvent e) {
-    Player player = e.getPlayer(); // プレイヤー取得
-
-    // プレイヤーは、青いベッドを１個取得する。
-    ItemStack blueBed = new ItemStack(Material.BLUE_BED, 1);
-    player.getInventory().addItem(blueBed);
-  }
-
 
   /**
-   * プレイヤーがベッドに入ろうとした時にアイテムの所持数が最大64個になるイベント
+   * プレイヤーがベッドに入ろうとした時にアイテムの所持数が最大64個(MAX)以外のアイテムを削除するイベント
    * <p>
-   * プレイヤーは、青いベッドを１個取得する
    *
    * @param e イベント
    */
@@ -52,8 +37,8 @@ public final class Main extends JavaPlugin implements Listener {
 
     Arrays.stream(itemStacks)
         .filter(
-            item -> !Objects.isNull(item) && item.getMaxStackSize() == 64 && item.getAmount() < 64)
-        .forEach(item -> item.setAmount(64));
+            item -> !Objects.isNull(item) && item.getAmount() < 64)
+        .forEach(item -> item.setAmount(0)); // アイテムの所持数を0にする
 
     player.getInventory().setContents(itemStacks); // プレイヤーはアイテム所持数を変更
 
