@@ -1,0 +1,4 @@
+name: micra_item
+version: '1.0-SNAPSHOT'
+main: plugin.micra_item.Main
+api-version: '1.21'
